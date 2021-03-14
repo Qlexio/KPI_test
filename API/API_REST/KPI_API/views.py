@@ -22,7 +22,6 @@ class CityInvestmentsViewSet(APIView):
             raise Http404
 
     def get(self, request, ville, format=None):
-        print(ville)
         investment = self.get_object(ville)
         serializer = JsonDatasetSerializer(investment, many= True)
         return Response(serializer.data)
@@ -37,5 +36,18 @@ class StateInvestmentViewSet(APIView):
 
     def get(self, request, etat, format=None):
         investment = self.get_object(etat)
+        serializer = JsonDatasetSerializer(investment, many=True)
+        return Response(serializer.data)
+
+class CodeInvestmentsViewSet(APIView):
+
+    def get_object(self, code):
+        try:
+            return JsonDataset.objects.filter(codeuai= code)
+        except JsonDataset.DoesNotExist:
+            raise Http404
+
+    def get(self, request, code, format=None):
+        investment = self.get_object(code)
         serializer = JsonDatasetSerializer(investment, many=True)
         return Response(serializer.data)
