@@ -1,15 +1,8 @@
+{% extends 'KPI_Web/base.html' %}
+{% load static %}
+
+{% block content %}
+
 <h1>Page d'accueil</h1>
 
-<p>Liens:
-<br>
-<a href="{% url 'investments' %}">Investissements</a>
-<br>
-<a href="{% url 'investmentsbycity' %}">Investissement par ville</a>
-<br>
-<a href="{% url 'investmentsbyprogress' %}">Investissement par état d'avancement</a>
-<br>
-<a href="{% url 'investmentsbycode' %}">Investissement par code</a>
-<br>
-<a href="{% url 'investmentsbycityprogress' %}">Investissement par ville et par état d'avancement</a>
-
-</p>
+{% endblock %}

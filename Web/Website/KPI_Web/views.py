@@ -1,6 +1,7 @@
 from django.shortcuts import render
 import requests as r
 from .forms import InvestmentsByCity, InvestmentsByCityProgress
+from django.core.paginator import Paginator #import Paginator
 
 # Create your views here.
 
@@ -11,9 +12,16 @@ def investments(request):
 
     context = {}
 
+    # Get datas
     datas = r.get("http://127.0.0.1:8000/investments")
-    context["datas"] = datas.json()
-    return render(request, "KPI_Web/listing.html", context)
+    json_datas = datas.json()
+    # Pagination
+    paginator = Paginator(json_datas, 5)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    # context["datas"] = datas.json()
+    return render(request, "KPI_Web/listing.html", context={"datas": page_obj})
 
 def investments_by_city(request):
 

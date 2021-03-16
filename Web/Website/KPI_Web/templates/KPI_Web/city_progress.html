@@ -1,3 +1,7 @@
+{% extends 'KPI_Web/base.html' %}
+{% load static %}
+
+{% block content %}
 
 {% if bool %}
     <p>Aucun résultat trouvé</p>
@@ -12,3 +16,5 @@
     <br><br>
     <button type="submit">Rechercher</button>
 </form>
+
+{% endblock %}
