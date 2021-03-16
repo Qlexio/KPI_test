@@ -1,0 +1,40 @@
+{% extends 'KPI_Web/base.html' %}
+{% load static %}
+
+{% block content %}
+
+{% if error %}
+<p>Il y a une erreur dans le formulaire</p>
+{% endif %}
+
+{% if status %}
+<p>Une erreur {{code}} s'est produite</p>
+{% endif %}
+
+<form method="POST">
+    {% csrf_token %}
+
+    <p>Titre opération: {{form.titreoperation}}</p>
+    <p>Entreprise: {{form.entreprise}}</p>
+    <p>Année de livraison: {{form.annee_de_livraison}}</p>
+    <p>Ville: {{ form.ville }}</p>
+    <p>Mandataire: {{form.mandataire}}</p>
+    <p>Nombre de lots: {{form.nombre_de_lots}}</p>
+    <p>PPI: {{form.ppi}}</p>
+    <p>Lycée: {{form.lycee}}</p>
+    <p>Notification du marché: {{form.notification_du_marche}}</p>
+    <p>Code UAI: {{form.codeuai}}</p>
+    <p>Longitude: {{form.longitude}}</p>
+    <p>Etat d'avancement: {{form.etat_d_avancement}}</p>
+    <p>Montant des AP votés en MEU: {{form.montant_des_ap_votes_en_meu}}</p>
+    <p>CAO attribution: {{form.cao_attribution}}</p>
+    <p>Latitude: {{form.latitude}}</p>
+    <p>Maitrise d'oeuvre: {{form.maitrise_d_oeuvre}}</p>
+    <p>Mode de dévolution: {{form.mode_de_devolution}}</p>
+    <p>Année d'individualisation: {{form.annee_d_individualisation}}</p>
+    <p>Enveloppe prév en MEU: {{form.enveloppe_prev_en_meu}}</p>
+    <br><br>
+    <button type="submit">Rechercher</button>
+</form>
+
+{% endblock %}

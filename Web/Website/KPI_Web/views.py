@@ -1,7 +1,8 @@
 from django.shortcuts import render
 import requests as r
-from .forms import InvestmentsByCity, InvestmentsByCityProgress
+from .forms import InvestmentsByCity, InvestmentsByCityProgress, InvestmentsEntries
 from django.core.paginator import Paginator #import Paginator
+import json
 
 # Create your views here.
 
@@ -190,3 +191,58 @@ def investments_by_city_progress(request):
         context["form"] = InvestmentsByCityProgress()
         context["bool"] = False
         return render(request, "KPI_Web/city_progress.html", context)
+
+def new_investment(request):
+
+    if request.method == "POST":
+
+        context = {}
+        
+        form = InvestmentsEntries(request.POST)
+
+        if form.is_valid():
+            # Get form values and create dict
+            datas = {}
+            datas["titreoperation"] = form.cleaned_data["titreoperation"]
+            datas["entreprise"] = form.cleaned_data["entreprise"]
+            datas["annee_de_livraison"] = form.cleaned_data["annee_de_livraison"]
+            datas["ville"] = form.cleaned_data["ville"]
+            datas["mandataire"] = form.cleaned_data["mandataire"]
+            datas["nombre_de_lots"] = form.cleaned_data["nombre_de_lots"]
+            datas["ppi"] = form.cleaned_data["ppi"]
+            datas["lycee"] = form.cleaned_data["lycee"]
+            datas["notification_du_marche"] = form.cleaned_data["notification_du_marche"]
+            datas["codeuai"] = form.cleaned_data["codeuai"]
+            datas["longitude"] = form.cleaned_data["longitude"]
+            datas["etat_d_avancement"] = form.cleaned_data["etat_d_avancement"]
+            datas["montant_des_ap_votes_en_meu"] = form.cleaned_data["montant_des_ap_votes_en_meu"]
+            datas["cao_attribution"] = form.cleaned_data["cao_attribution"]
+            datas["latitude"] = form.cleaned_data["latitude"]
+            datas["maitrise_d_oeuvre"] = form.cleaned_data["maitrise_d_oeuvre"]
+            datas["mode_de_devolution"] = form.cleaned_data["mode_de_devolution"]
+            datas["annee_d_individualisation"] = form.cleaned_data["annee_d_individualisation"]
+            datas["enveloppe_prev_en_meu"] = form.cleaned_data["enveloppe_prev_en_meu"]
+
+            url = "http://127.0.0.1:8000/investments/"
+            response = r.post(url, data=datas)
+            if response.status_code == 201:
+                return render(request, "KPI_Web/success.html")
+            else:
+                context["form"] = form
+                context["error"] = False
+                context["status"] = True
+                context["code"] = response.status_code
+                return render(request, "KPI_Web/new.html", context)
+
+        else:
+            context["form"] = form
+            context["error"] = True
+            context["status"] = False
+            return render(request, "KPI_Web/new.html", context)
+
+    else:
+        context = {}
+        context["form"] = InvestmentsEntries()
+        context["error"] = False
+        context["status"] = False
+        return render(request, "KPI_Web/new.html", context)
