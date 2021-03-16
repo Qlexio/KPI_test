@@ -1,0 +1,14 @@
+
+{% if bool %}
+    <p>Aucun résultat trouvé</p>
+{% endif %}
+
+<form method="POST">
+    {% csrf_token %}
+
+    <p>Entrer la ville et l'etat d'avancement pour lesquels vous souhaitez connaître les investissements</p>
+    <p>Ville: {{ form.entry }}</p>
+    <p>Etat d'avancement {{ form.entry2 }}</p>
+    <br><br>
+    <button type="submit">Rechercher</button>
+</form>

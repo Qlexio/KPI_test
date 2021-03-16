@@ -1,0 +1,13 @@
+
+{% if bool %}
+    <p>Aucun résultat trouvé</p>
+{% endif %}
+
+<form method="POST">
+    {% csrf_token %}
+
+    <p>Entrer le code UAI pour lequel vous souhaitez connaître les investissements</p>
+    <p>Code UAI: {{ form.entry }}</p>
+    <br><br>
+    <button type="submit">Rechercher</button>
+</form>
