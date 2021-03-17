@@ -246,3 +246,30 @@ def new_investment(request):
         context["error"] = False
         context["status"] = False
         return render(request, "KPI_Web/new.html", context)
+
+def investments_map(request):
+
+    import folium
+
+    # Investments are on Paris area, so center the map on Paris
+    paris_coord = [48.856614, 2.3522219]
+    map = folium.Map(location=  paris_coord)
+
+    # Get datas from API
+    datas = r.get("http://127.0.0.1:8000/investments")
+    json_datas = datas.json()
+    
+    # Add marker to map
+    for i in json_datas:
+        popup = ""
+        if i["longitude"] == None or i["latitude"] == None:
+            continue
+        else:
+            for k, v in i.items():
+                popup += f"{k.capitalize()}: {v}<br>"
+            folium.Marker([float(i["latitude"]), float(i["longitude"])], popup=popup).add_to(map)
+
+    map.save("./KPI_Web/static/Image/map_save.html")
+
+    return render(request, "KPI_Web/map.html")
+    

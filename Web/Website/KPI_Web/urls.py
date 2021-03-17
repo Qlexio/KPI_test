@@ -9,4 +9,5 @@ urlpatterns = [
     path("code/", views.investments_by_code, name="investmentsbycode"),
     path("city_progress/", views.investments_by_city_progress, name="investmentsbycityprogress"),
     path("new/", views.new_investment, name="newinvestments"),
+    path("map/", views.investments_map, name="investmentsmap"),
 ]
